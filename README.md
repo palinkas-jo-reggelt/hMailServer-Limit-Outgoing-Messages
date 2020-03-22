@@ -1,7 +1,7 @@
 # hMailServer-Limit-Outgoing-Messages
 
 Limit Daily Outgoing Messages on hMailServer
-   ~and~
+   _and_
 Require "It's Really Me" after inactivity period
 
 
