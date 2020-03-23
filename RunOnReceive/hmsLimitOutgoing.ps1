@@ -52,10 +52,8 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 		
 		<#  If last message today, then update count = existing count + 1; otherwise this is the first message of the day  #>
 		If ($LastMessageTime -lt ([datetime]::Today)){
-			Write-Host "lastmessagetime before today"
 			$UpdateQuery = "UPDATE hm_accounts_mobile SET lastmessagetime = NOW(), messagecount = 1 WHERE account = '$Account';"
 		} Else {
-			Write-Host "lastmessagetime today"
 			$UpdateQuery = "UPDATE hm_accounts_mobile SET lastmessagetime = NOW(), messagecount = (messagecount + 1) WHERE account = '$Account';"
 		}
 		MySQLQuery $UpdateQuery
@@ -68,7 +66,6 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 
 		<#  If message count exceeded, disable account and send SMS notification requiring password change  #>
 		If ($MessageCount -gt $MsgLimit){
-			Write-Host "Message count exceeded"
 			DisableAccount $Account
 			$Msg = "Security notice from $(((Get-Culture).TextInfo).ToTitleCase(($Account).Split('@')[1])) Mail Server: Your account ($Account) has exceeded $MsgLimit outgoing messages today and has been disabled to prevent abuse. In order to enable your account you are required to change your password. Reply PW CHANGE to initiate process."
 			SendSMS $MobileNumber $Msg

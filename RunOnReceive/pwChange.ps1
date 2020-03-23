@@ -25,6 +25,9 @@
 	Initiate password change via SMS:
 		pw change
 
+	Re-Initiation of password change via SMS when multiple accounts are associated with a single mobile number:
+		pw change <email@address.com>
+
 	Request random password assigned via SMS:
 		pw random
 	
