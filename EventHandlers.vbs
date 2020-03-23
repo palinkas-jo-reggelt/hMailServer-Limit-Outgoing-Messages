@@ -75,7 +75,7 @@ End Function
 
 Sub GetTwoFactorInfo(ByVal s_Account, ByRef m_MobileNumber, ByRef m_LastLogon, ByRef m_LastLockTime)
 	Dim oRecord, oConn : Set oConn = CreateObject("ADODB.Connection")
-	oConn.Open "Driver={MariaDB ODBC 3.0 Driver}; Server=localhost; Database=hmailserver; User=hmailserver; Password=SSnGLBs8XswL2r0h;"
+	oConn.Open "Driver={MariaDB ODBC 3.0 Driver}; Server=localhost; Database=hmailserver; User=hmailserver; Password=supersecretpassword;"
 
 	If oConn.State <> 1 Then
 		EventLog.Write( "Sub GetTwoFactorInfo - ERROR: Could not connect to database" )
