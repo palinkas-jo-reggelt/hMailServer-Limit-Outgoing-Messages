@@ -7,7 +7,7 @@
 	Setup Database for hMailServer Limit Outgoing Messages / Two Factor Project
 
 .FUNCTIONALITY
-	1) Run once to setup database and export users to csv (script creates Accounts.csv located in same folder as script)
+	1) Run once from powershell console to setup database and export users to csv (script creates Accounts.csv located in same folder as script)
 	2) Manually edit Accounts.csv to add mobile numbers
 	3) Run again to fill hm_accounts_mobile with account and mobilenumber data from Accounts.csv
 

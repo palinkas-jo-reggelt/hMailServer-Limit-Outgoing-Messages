@@ -10,7 +10,9 @@
 	Tails AWStats log, updates database with daily message count.
 
 .NOTES
-
+	Run from task scheduler with TWO triggers:
+		- At Startup
+		- At 12:01 AM Daily
 	
 .EXAMPLE
 
@@ -24,6 +26,17 @@ Try {
 Catch {
 	Write-Output "$((get-date).ToString(`"yy/MM/dd HH:mm:ss.ff`")) : ERROR : Unable to load supporting PowerShell Scripts : $query `n$Error[0]" | out-file "$PSScriptRoot\PSError.log" -append
 }
+
+<#	Check to see if hMailServer is running. If not, quit. MySQL is a dependency of hMailServer service so you're actually checking both.   #>
+<#	Prevents scheduled task failures at bootup.   #>
+Do {
+	If ((get-service hMailServer).Status -ne 'Running') { 
+		$Running = "NO"
+		Start-Sleep -seconds 30
+	} Else { 
+		$Running = "YES" 
+	}
+} Until ($Running = "YES")
 
 <#	RegEx to find email address in a string   #>
 [regex]$RegexEmail = "[A-Za-z0-9!.#$%&'*+\/=?^_`{|}~-]+@([A-Za-z0-9-]{2,63}\.){1,10}[A-Za-z0-9-]{2,12}"
@@ -71,4 +84,7 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 			SendSMS $MobileNumber $Msg
 		}
 	}
+
+	<#	Quit script at 23:59 in order to load next day's log (initiated by scheduled task at 00:01)  #>
+	If ((Get-Date -format HH:mm) -gt "23:58") { Exit }
 }
