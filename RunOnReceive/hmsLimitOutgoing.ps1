@@ -45,6 +45,7 @@ Do {
 Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-String -Delimiter "`t" -PropertyNames TimeStamp, Sender, Recipient, ConnectionSender, ConnectionRecipient, Protocol, QuestionMark, StatusCode, MessageSize | ForEach {
 
 	$Sender = $_.Sender
+	$MsgTimeStamp = $_.TimeStamp
 
 	<#	Clear out variables in loop  #>
 	$Account = $UpdateQuery = $Query = $Account = $MobileNumber = $LastMessageTime = $MessageCount = $Msg = $NULL
@@ -79,12 +80,20 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 
 		<#  If message count exceeded, disable account and send SMS notification requiring password change  #>
 		If ($MessageCount -gt $MsgLimit){
-			DisableAccount $Account
-			$Msg = "Security notice from $(((Get-Culture).TextInfo).ToTitleCase(($Account).Split('@')[1])) Mail Server: Your account ($Account) has exceeded $MsgLimit outgoing messages today and has been disabled to prevent abuse. In order to enable your account you are required to change your password. Reply PW CHANGE to initiate process."
-			SendSMS $MobileNumber $Msg
+
+			<#  Only send notification to user if account has mobile number  #>
+			If ($MobileNumber -ne 0){
+				DisableAccount $Account
+				$Msg = "Security notice from $(((Get-Culture).TextInfo).ToTitleCase(($Account).Split('@')[1])) Mail Server: Your account ($Account) has exceeded $MsgLimit outgoing messages today and has been disabled to prevent abuse. In order to enable your account you are required to change your password. Reply PW CHANGE to initiate process."
+				SendSMS $MobileNumber $Msg
+			}
+
+			<#  Notify admin  #>
+			$AdminMsg = "Outgoing message limit exceeded for $Account - account disabled."
+			SendSMS $AdminNumber $AdminMsg
 		}
 	}
 
-	<#	Quit script at 23:59 in order to load next day's log (initiated by scheduled task at 00:01)  #>
+	<#	Quit script at 23:59 in order to load next day's run (initiated by scheduled task at 00:01)  #>
 	If ((Get-Date -format HH:mm) -gt "23:58") { Exit }
 }
