@@ -58,6 +58,10 @@ MySQLQuery $Query | ForEach {
 		$Msg = "Your account ($Account) has been unlocked. You may now login."
 		SendSMS $Num $Msg
 		
+		<#  Notify admin  #>
+		$AdminMsg = "User $Account account unlocked by user (lock triggered by inactivity)."
+		SendSMS $AdminNumber $AdminMsg
+
 		<#  Reset last logon to NOW  #>
 		$Query = "UPDATE hm_accounts_mobile SET lastlogontime = NOW() WHERE account = '$Account';"
 		MySQLQuery $Query
