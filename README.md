@@ -54,7 +54,7 @@ Two projects in one.
 
 **For Tailing AWStats Log:**
 
-Create a scheduled task to run hmsLimitOutgoing.ps1 at startup !!!AND!!! at 12:01 AM daily (one task, two triggers). Script runs 27/7.
+Create a scheduled task to run hmsLimitOutgoing.ps1 at startup !!!AND!!! at 12:01 AM daily (one task, two triggers). Script runs 24/7.
 
 
 **For Web Admin:**
