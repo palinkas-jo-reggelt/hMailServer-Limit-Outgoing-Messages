@@ -13,7 +13,7 @@
 		$display_pagination = 0;
 	}
 	if (isset($_GET['submit'])) {$button = $_GET['submit'];} else {$button = "";}
-	if (isset($_GET['search'])) {$search = $_GET['search'];} else {$search = "";}
+	if (isset($_GET['search'])) {$search = trim($_GET['search']);} else {$search = "";}
 
 	echo "<br><br>";
 	echo "<div class='section'>";
