@@ -1,6 +1,15 @@
 <?php
 
-/* Database Variables 
+/*	Site Logon Variables 
+	Username and password to allow access to site
+*/
+
+$user_name = 'admin';
+$pass_word = 'password';
+
+
+
+/*	Database Variables 
 
 	'dbtype' = database server type
 	
@@ -31,8 +40,7 @@ $Database = array (
 );
 
 
-/* hMailServer COM Authentication 
-	
+/*  hMailServer COM Authentication 
 	Password for hMailServer "Administrator"
 */
 
