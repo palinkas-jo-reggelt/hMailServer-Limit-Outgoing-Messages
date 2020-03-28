@@ -154,16 +154,31 @@ If ($rorMsg -match "([pP][wW]\s[nN][eE][wW])(\s+)?"){
 
 			<#  If account disabled, enable it now that password has changed  #>
 			If (-not(IsAccountEnabled $Email)){
+
+				<#  Enable account  #>
 				EnableAccount $Email
+
+				<#  Send admin confirmation message  #>
+				$AdminMsg = "User $Account successfully changed password and unlocked account."
+				SendSMS $AdminNumber $AdminMsg
+
+				<#  Reset message count so it doesn't repeatedly trip account disable  #>
+				$Query = "UPDATE hm_accounts_mobile SET messagecount = 0 WHERE account = '$Email';"
+				MySQLQuery $Query
 			}
+			<#  Reset initpw so we don't confuse the correct account/mobilenumber combination next time we need it  #>
 			$Query = "UPDATE hm_accounts_mobile SET initpw = 0 WHERE account = '$Email';"
 			MySQLQuery $Query
 		}
 
-		<#  On error, send error message  #>
 		Else {
+			<#  On error, send error message  #>
 			$Msg = "Something went wrong. Please contact the administrator."
 			SendSMS $Num $Msg
+
+			<#  On error, notify admin  #>
+			$AdminMsg = "ERROR - Something went wrong with $Account password change."
+			SendSMS $AdminNumber $AdminMsg
 			Exit
 		}
 	}
@@ -180,13 +195,24 @@ If ($rorMsg -match "([pP][wW]\s[rR][aA][nN][dD][oO][mM])(\s+)?"){
 
 	<#  If password change successful, send confirmation message  #>
 	If ($((($hMS.Domains.ItemByName($Domain)).Accounts.ItemByAddress($Email)).ValidatePassword($Password)) -eq $True){
-		$Msg = "Your new password is $password for the account $email. Please go to $WebMailURL to log into your email."
+		$Msg = "Your new password is $password for the account $Email. Please go to $WebMailURL to log into your email."
 		SendSMS $Num $Msg
 
 		<#  If account disabled, enable it now that password has changed  #>
 		If (-not(IsAccountEnabled $Email)){
+
+			<#  Enable account  #>
 			EnableAccount $Email
+
+			<#  Send admin confirmation message  #>
+			$AdminMsg = "User $Account successfully changed password and unlocked account."
+			SendSMS $AdminNumber $AdminMsg
+
+			<#  Reset message count so it doesn't repeatedly trip account disable  #>
+			$Query = "UPDATE hm_accounts_mobile SET messagecount = 0 WHERE account = '$Email';"
+			MySQLQuery $Query
 		}
+		<#  Reset initpw so we don't confuse the correct account/mobilenumber combination next time we need it  #>
 		$Query = "UPDATE hm_accounts_mobile SET initpw = 0 WHERE account = '$Email';"
 		MySQLQuery $Query
 	}
@@ -195,6 +221,10 @@ If ($rorMsg -match "([pP][wW]\s[rR][aA][nN][dD][oO][mM])(\s+)?"){
 		<#  On error, send error message  #>
 		$Msg = "Something went wrong. Please contact the administrator."
 		SendSMS $Num $Msg
+
+		<#  On error, notify admin  #>
+		$AdminMsg = "ERROR - Something went wrong with $Account password change."
+		SendSMS $AdminNumber $AdminMsg
 		Exit
 	}
 }

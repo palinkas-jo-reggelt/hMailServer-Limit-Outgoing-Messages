@@ -21,15 +21,16 @@
 #>
 
 <###   USER VARIABLES   ###>
-$hMSAdminPass = "supersecretpassword"                       #<-- hMailServer Administrator Password
+$hMSAdminPass = "b!gH0rny69"                                #<-- hMailServer Administrator Password
 $hMSLogFolder = "C:\Program Files (x86)\hMailServer\Logs"   #<-- hMailServer Log Folder
 $MsgLimit = 100                                             #<-- Outgoing daily message limit per user
-$PWURL = "https://domain.com/pw"                            #<-- URL of password changer website
-$WebMailURL = "https://webmail.domain.com"                  #<-- URL of webmail
+$PWURL = "https://wap.dynu.net/pw"                          #<-- URL of password changer website
+$WebMailURL = "https://wap.dynu.net"                        #<-- URL of webmail
+$AdminNumber = "9173286699"                                 #<-- Mobile number of system admin for notifications
 
-<###   hMailServer MYSQL VARIABLES   ###>
+<###   MYSQL VARIABLES   ###>
 $SQLAdminUserName = 'hmailserver'
-$SQLAdminPassword = 'supersecretpassword'
+$SQLAdminPassword = 'SSnGLBs8XswL2r0h'
 $SQLDatabase      = 'hmailserver'
 $SQLHost          = '127.0.0.1'
 $SQLPort          = 3306
@@ -92,18 +93,28 @@ Function Change-Password ($Email, $Password){
 
 <#  Disable Account Function  #>
 Function DisableAccount($Account){
+	<#  Disable account  #>
 	$Domain = ($Account).Split("@")[1]
 	$hMSAccountStatus = ($hMS.Domains.ItemByName($Domain)).Accounts.ItemByAddress($Account)
 	$hMSAccountStatus.Active = $False
 	$hMSAccountStatus.Save()
+	
+	<#  Update accountdisabled in database  #>
+	$UpdateQuery = "UPDATE hm_accounts_mobile SET accountdisabled = 1 WHERE account = '$Account';"
+	MySQLQuery $UpdateQuery
 }
 
 <#  Enable Account Function  #>
 Function EnableAccount($Account){
+	<#  Enable account  #>
 	$Domain = ($Account).Split("@")[1]
 	$hMSAccountStatus = ($hMS.Domains.ItemByName($Domain)).Accounts.ItemByAddress($Account)
 	$hMSAccountStatus.Active = $True
 	$hMSAccountStatus.Save()
+
+	<#  Update accountdisabled in database  #>
+	$UpdateQuery = "UPDATE hm_accounts_mobile SET accountdisabled = 0 WHERE account = '$Account';"
+	MySQLQuery $UpdateQuery
 }
 
 <#  Is Account Enabled Function  #>

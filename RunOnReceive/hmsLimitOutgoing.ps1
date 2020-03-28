@@ -83,7 +83,11 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 
 			<#  Only send notification to user if account has mobile number  #>
 			If ($MobileNumber -ne 0){
+
+				<#  Disable account  #>
 				DisableAccount $Account
+
+				<#  Send notification  #>
 				$Msg = "Security notice from $(((Get-Culture).TextInfo).ToTitleCase(($Account).Split('@')[1])) Mail Server: Your account ($Account) has exceeded $MsgLimit outgoing messages today and has been disabled to prevent abuse. In order to enable your account you are required to change your password. Reply PW CHANGE to initiate process."
 				SendSMS $MobileNumber $Msg
 			}

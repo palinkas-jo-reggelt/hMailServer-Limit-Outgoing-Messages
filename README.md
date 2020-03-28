@@ -55,3 +55,8 @@ Two projects in one.
 **For Tailing AWStats Log:**
 
 Create a scheduled task to run hmsLimitOutgoing.ps1 at startup !!!AND!!! at 12:01 AM daily (one task, two triggers). Script runs 27/7.
+
+
+**For Web Admin:**
+
+Copy www folder into php accessible webserver and change variables in config.php. Warning: uses hMailServer COM: you must extension=php_com_dotnet.dll in php.ini in order to enable/disable accounts.
