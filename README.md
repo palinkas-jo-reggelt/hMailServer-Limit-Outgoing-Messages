@@ -54,7 +54,8 @@ Two projects in one.
 
 **For Tailing AWStats Log:**
 
-Create a scheduled task to run hmsLimitOutgoing.ps1 at startup !!!AND!!! at 12:01 AM daily (one task, two triggers). Script runs 24/7.
+1) Create a scheduled task to run hmsLimitOutgoing.ps1 at startup !!!AND!!! at 12:01 AM daily (one task, two triggers). Script runs daily between 00:01 and 23:57.
+2) Create a scheduled task to run kill-LimitOutgoing.ps1 at 23:57 daily. The hmsLimitOutgoing.ps1 script contains a foreach loop that tails the awstats log. There is no good way to break from this loop, so there is an IF statement at the end: if current time > 23:56 then exit. The problem is that unless there is a new awstats entry after 23:56, nothing will trigger the IF statement. This may not be a problem on a busy server. kill-LimitOutgoing.ps1 simply sends a message to the hMailServer administrator, which then gets added to awstats, which in turn triggers the IF statement allowing the script to quit on time. Without this trigger, the next day's 00:01 startup may not occur with an error in task scheduler. 
 
 
 **For Web Admin:**

@@ -97,7 +97,6 @@ Get-Content "$hMSLogFolder\hmailserver_awstats.log" -Wait -Tail 1 | ConvertFrom-
 			SendSMS $AdminNumber $AdminMsg
 		}
 	}
-
-	<#	Quit script at 23:59 in order to load next day's run (initiated by scheduled task at 00:01)  #>
-	If ((Get-Date -format HH:mm) -gt "23:58") { Exit }
+	<#	Quit script at 23:57 in order to load next day's log (initiated by scheduled task at 00:01)  #>
+	If ((Get-Date -format HH:mm) -gt "23:56") { Exit }
 }
