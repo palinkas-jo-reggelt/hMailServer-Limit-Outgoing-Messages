@@ -36,7 +36,7 @@
 		header("Location: ./account.php?account=".$account);
 	}
 	if (isset($_GET['unlockaccount'])){
-		$pdo->exec("UPDATE hm_accounts_mobile SET accountlock=0 WHERE account='".$account."';");
+		$pdo->exec("UPDATE hm_accounts_mobile SET accountlock=0, lastlogontime=NOW() WHERE account='".$account."';");
 		header("Location: ./account.php?account=".$account);
 	}
 	if (isset($_GET['lockaccount'])){

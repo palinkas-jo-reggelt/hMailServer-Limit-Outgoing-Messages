@@ -21,16 +21,16 @@
 #>
 
 <###   USER VARIABLES   ###>
-$hMSAdminPass = "b!gH0rny69"                                #<-- hMailServer Administrator Password
+$hMSAdminPass = "supersecretpassword"                       #<-- hMailServer Administrator Password
 $hMSLogFolder = "C:\Program Files (x86)\hMailServer\Logs"   #<-- hMailServer Log Folder
 $MsgLimit = 100                                             #<-- Outgoing daily message limit per user
-$PWURL = "https://wap.dynu.net/pw"                          #<-- URL of password changer website
-$WebMailURL = "https://wap.dynu.net"                        #<-- URL of webmail
-$AdminNumber = "9173286699"                                 #<-- Mobile number of system admin for notifications
+$PWURL = "https://mydomain.tld/pw"                          #<-- URL of password changer website
+$WebMailURL = "https://webmail.mydomain.tld"                #<-- URL of webmail
+$AdminNumber = "1234567890"                                 #<-- Mobile number of system admin for notifications
 
 <###   MYSQL VARIABLES   ###>
 $SQLAdminUserName = 'hmailserver'
-$SQLAdminPassword = 'SSnGLBs8XswL2r0h'
+$SQLAdminPassword = 'supersecretpassword'
 $SQLDatabase      = 'hmailserver'
 $SQLHost          = '127.0.0.1'
 $SQLPort          = 3306
