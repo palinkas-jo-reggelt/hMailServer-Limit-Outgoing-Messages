@@ -5,38 +5,35 @@
 */
 
 $user_name = 'admin';
-$pass_word = 'password';
+$pass_word = 'supersecretpassword';
 
+// Cookie Duration in days
+$cookie_duration = 90; 
 
 
 /*	Database Variables 
 
-	'dbtype' = database server type
+	MySQL only!
 	
-		For MySQL use dbtype = 'mysql'
-		For MSSQL use dbtype = 'mssql'
-
 	'driver' = connection type
 	
 		For MySQL use driver = 'mysql'
-		For MSSQL use driver = 'mssql'
 		For ODBC  use driver = 'odbc'
 		
 		* When opting for ODBC use correct DSN! *
-		* Example: "MariaDB ODBC 3.0 Driver".   *
+		* Example: "MariaDB ODBC 3.0 Driver"    *
 		* Exact spelling is critical!           *
 	
 */
 
 $Database = array (
-	'dbtype'      => 'mysql',
 	'host'        => 'localhost',
 	'username'    => 'hmailserver',
 	'password'    => 'supersecretpassword',
 	'dbname'      => 'hmailserver',
 	'driver'      => 'mysql',
 	'port'        => '3306',
-	'dsn'         => 'MariaDB ODBC 3.0 Driver'
+	'dsn'         => 'MariaDB ODBC 3.1 Driver'
 );
 
 

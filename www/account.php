@@ -1,10 +1,3 @@
-<?php
-    session_start();
-    if(!isset($_SESSION['login'])) {
-        header('LOCATION:login.php'); die();
-    }
-?>
-
 <?php include("head.php") ?>
 
 <?php
@@ -68,7 +61,7 @@
 	while($row = $sql->fetch(PDO::FETCH_ASSOC)){
 		echo "<tr>
 				<td>Mobile Number:</td>
-				<td>".displayMobileNumber($row['mobilenumber'])."</td>
+				<td style='text-align:center;'>".displayMobileNumber($row['mobilenumber'])."</td>
 				<td>
 					<form action='account.php' method='GET' onsubmit='return confirm(\"Are you sure you want to change the mobile number?\");'>
 						<input type='text' size='12' name='updatemobilenumber' placeholder='".$row['mobilenumber']."'>
@@ -79,13 +72,13 @@
 			</tr>";
 		echo "<tr>
 				<td>Last Lock:</td>
-				<td>".$row['lastlocktime']."</td>
+				<td style='text-align:center;'>".$row['lastlocktime']."</td>
 				<td>
 				</td>
 			</tr>";
 		echo "<tr>
 				<td>Last Logon:</td>
-				<td>".$row['lastlogontime']."</td>
+				<td style='text-align:center;'>".$row['lastlogontime']."</td>
 				<td>
 					<form action='account.php' method='GET' onsubmit='return confirm(\"Are you sure you want to reset last logon time?\");'>
 						<input type='submit' name='updatelastlogontime' value='Update to NOW' >
@@ -95,13 +88,13 @@
 			</tr>";
 		echo "<tr>
 				<td>Last Message:</td>
-				<td>".$row['lastmessagetime']."</td>
+				<td style='text-align:center;'>".$row['lastmessagetime']."</td>
 				</td>
 				<td>
 			</tr>";
 		echo "<tr>
 				<td>Message Count:</td>
-				<td>".$row['messagecount']."</td>
+				<td style='text-align:center;'>".$row['messagecount']."</td>
 				<td>
 					<form action='account.php' method='GET' onsubmit='return confirm(\"Are you sure you want to reset the message count?\");'>
 						<input type='submit' name='updatemessagecount' value='Reset Message Count' >
@@ -112,7 +105,7 @@
 		if ($row['accountdisabled']==0){$disabledaccount="No";}else{$disabledaccount="Yes";}
 		echo "<tr>
 				<td>Account Disabled:</td>
-				<td>".$disabledaccount."</td>
+				<td style='text-align:center;'>".$disabledaccount."</td>
 				<td>
 					<form action='account.php' method='GET' onsubmit='return confirm(\"Are you sure you want to enable the account?\");'>
 						<input type='hidden' name='account' value='".$row['account']."'>
@@ -128,7 +121,7 @@
 		if ($row['accountlock']==0){$lockedaccount="No";}else{$lockedaccount="Yes";}
 		echo "<tr>
 				<td>Account Locked:</td>
-				<td>".$lockedaccount."</td>
+				<td style='text-align:center;'>".$lockedaccount."</td>
 				<td>
 					<form action='account.php' method='GET' onsubmit='return confirm(\"Are you sure you want to unlock the account?\");'>
 						<input type='hidden' name='account' value='".$row['account']."'>
@@ -144,7 +137,7 @@
 		if ($row['initpw']==0){$pwinit="No";}else{$pwinit="Yes";}
 		echo "<tr>
 				<td>Password Change Initiated:</td>
-				<td>".$pwinit."</td>
+				<td style='text-align:center;'>".$pwinit."</td>
 				</td>
 				<td>
 			</tr>";

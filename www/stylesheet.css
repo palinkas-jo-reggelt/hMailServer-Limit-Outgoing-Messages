@@ -122,12 +122,12 @@ table.section {
 	
 table.section tr:nth-child(even) {
     background-color: #F8F8F8;
-	padding: 10px
+	padding: 2px 0 2px 0;
 	}
 
 table.section th, table.section td {
 	border: 1px solid black;
-	padding: 10px
+	padding: 2px 0 2px 0;
 	}
 
 .footer {

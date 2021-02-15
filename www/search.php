@@ -1,10 +1,3 @@
-<?php
-    session_start();
-    if(!isset($_SESSION['login'])) {
-        header('LOCATION:login.php'); die();
-    }
-?>
-
 <?php include("head.php") ?>
 
 <?php
@@ -84,7 +77,7 @@
 		echo "Results ".$search_res.": ".number_format($total_rows)." Account".$singular." ".$pagination."<br>";
 		echo "<table class='section' width='100%'>
 			<tr>
-				<th colspan='6' style='text-align:center;'>OLDER: NO MESSAGES SENT TODAY</th>
+				<th colspan='6' style='text-align:center;'>SEARCH OR BROWSE USER ACCOUNTS</th>
 			</tr>
 			<tr>
 				<th>Account</th>
